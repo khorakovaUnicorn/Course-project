@@ -34,6 +34,10 @@ export class RecipeService {
   //  slice vytvori kopii a kdekoliv budeme pristupovat do recipe[] budeme mit tuto kopii
   }
 
+  getRecipe(index: number) {
+    return this.recipes[index];
+  }
+
   addIngredientsToShoppingList(ingredients: Ingredient[]) {
     this.shoppingListService.addIngredients(ingredients);
   }
