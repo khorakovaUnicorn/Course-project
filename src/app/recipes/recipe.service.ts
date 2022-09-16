@@ -6,6 +6,7 @@ import {Subject} from "rxjs";
 
 @Injectable()
 export class RecipeService {
+  recipesChanged = new Subject<Recipe[]>();
 
   private recipes: Recipe[] = [
     new Recipe(
@@ -42,4 +43,20 @@ export class RecipeService {
     this.shoppingListService.addIngredients(ingredients);
   }
 
+  addRecipe(recipe: Recipe) {
+    this.recipes.push(recipe);
+    this.recipesChanged.next(this.recipes.slice());
+  //  pokud pridame novy recept, potrebujeme aby se nam recepty aktulizovali, musime zavest recipesChanged,
+  //  a vytvorit novou kopii array s receptz, kterou zobrazime
+  }
+
+  updateRecipe(index: number, newRecipe: Recipe) {
+    this.recipes[index] = newRecipe;
+    this.recipesChanged.next(this.recipes.slice());
+  }
+
+  deleteRecipe(index: number) {
+    this.recipes.splice(index, 1);
+    this.recipesChanged.next(this.recipes.slice());
+  }
 }
